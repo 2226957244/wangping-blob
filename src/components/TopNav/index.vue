@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { constantRoutes } from "@/router"
+import constantRoutes from "@/router/modules/constant.js"
 import { isHttp } from '@/utils/validate'
 import useAppStore from '@/store/modules/app'
 import useSettingsStore from '@/store/modules/settings'

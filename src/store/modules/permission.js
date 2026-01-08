@@ -1,5 +1,7 @@
 import auth from '@/plugins/auth'
-import router, { constantRoutes, dynamicRoutes } from '@/router'
+import router from '@/router'
+import constantRoutes from "@/router/modules/constant";
+import dynamicRoutes from "@/router/modules/dynamic";
 import { getRouters } from '@/api/menu'
 import Layout from '@/layout/index'
 import ParentView from '@/components/ParentView'

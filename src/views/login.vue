@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <el-form ref="loginRef" :model="loginForm" :rules="loginRules" class="login-form">
-      <h3 class="title">{{ title }}</h3>
+      <h3 class="title">欢迎你, <br />来到我的基地</h3>
       <el-form-item prop="username">
         <el-input
           v-model="loginForm.username"
@@ -25,21 +25,21 @@
           <template #prefix><svg-icon icon-class="password" class="el-input__icon input-icon" /></template>
         </el-input>
       </el-form-item>
-      <el-form-item prop="code" v-if="captchaEnabled">
-        <el-input
-          v-model="loginForm.code"
-          size="large"
-          auto-complete="off"
-          placeholder="验证码"
-          style="width: 63%"
-          @keyup.enter="handleLogin"
-        >
-          <template #prefix><svg-icon icon-class="validCode" class="el-input__icon input-icon" /></template>
-        </el-input>
-        <div class="login-code">
-          <img :src="codeUrl" @click="getCode" class="login-code-img"/>
-        </div>
-      </el-form-item>
+<!--      <el-form-item prop="code" v-if="captchaEnabled">-->
+<!--        <el-input-->
+<!--          v-model="loginForm.code"-->
+<!--          size="large"-->
+<!--          auto-complete="off"-->
+<!--          placeholder="验证码"-->
+<!--          style="width: 63%"-->
+<!--          @keyup.enter="handleLogin"-->
+<!--        >-->
+<!--          <template #prefix><svg-icon icon-class="validCode" class="el-input__icon input-icon" /></template>-->
+<!--        </el-input>-->
+<!--        <div class="login-code">-->
+<!--          <img :src="codeUrl" @click="getCode" class="login-code-img"/>-->
+<!--        </div>-->
+<!--      </el-form-item>-->
       <el-checkbox v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;">记住密码</el-checkbox>
       <el-form-item style="width:100%;">
         <el-button
@@ -65,6 +65,7 @@
 </template>
 
 <script setup>
+import {setToken } from "@/utils/auth"
 import { getCodeImg } from "@/api/login"
 import Cookies from "js-cookie"
 import { encrypt, decrypt } from "@/utils/jsencrypt"
@@ -119,23 +120,27 @@ function handleLogin() {
         Cookies.remove("password")
         Cookies.remove("rememberMe")
       }
+      setToken('eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6IjJlNDY0NmU4LTliMmYtNDc1ZC1hYjA1LTk4NjQ4YTMyZmZiNiJ9.kBp54NIm4crcFJ6vBhOjnrw_fkHUWFVb-h_5GBsr2J0WVE-q-Jkaay33GBftqTysG9uoQeqO620TLVmCQli3Sg')
+      loading.value = false
+      router.push({ path: redirect.value || "/", query: {} })
+
       // 调用action的登录方法
-      userStore.login(loginForm.value).then(() => {
-        const query = route.query
-        const otherQueryParams = Object.keys(query).reduce((acc, cur) => {
-          if (cur !== "redirect") {
-            acc[cur] = query[cur]
-          }
-          return acc
-        }, {})
-        router.push({ path: redirect.value || "/", query: otherQueryParams })
-      }).catch(() => {
-        loading.value = false
-        // 重新获取验证码
-        if (captchaEnabled.value) {
-          getCode()
-        }
-      })
+      // userStore.login(loginForm.value).then(() => {
+      //   const query = route.query
+      //   const otherQueryParams = Object.keys(query).reduce((acc, cur) => {
+      //     if (cur !== "redirect") {
+      //       acc[cur] = query[cur]
+      //     }
+      //     return acc
+      //   }, {})
+      //   router.push({ path: redirect.value || "/", query: otherQueryParams })
+      // }).catch(() => {
+      //   loading.value = false
+      //   // 重新获取验证码
+      //   // if (captchaEnabled.value) {
+      //   //   getCode()
+      //   // }
+      // })
     }
   })
 }
@@ -161,30 +166,45 @@ function getCookie() {
   }
 }
 
-getCode()
+// getCode()
 getCookie()
 </script>
 
 <style lang='scss' scoped>
+:deep(.el-input.el-input--large.el-input--prefix){
+  background-color: rgba(0,0,0,0.6) !important;
+}
+:deep(.el-input__wrapper){
+  background-color: unset;
+}
 .login {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   height: 100%;
-  background-image: url("../assets/images/login-background.jpg");
+  background-image: url("../assets/images/login-bg.jpeg");
   background-size: cover;
 }
 .title {
   margin: 0px auto 30px auto;
   text-align: center;
-  color: #707070;
+  background: -webkit-linear-gradient(#4082f4, #4ae4ea,#fefdfc);
+  -webkit-background-clip: text;
+  color: transparent;
+  background-clip: text;
+  font-style: italic;
+  word-spacing:8px;
+  font-size: 30px;
+  font-weight: bold;
+
 }
 
 .login-form {
+  color: #fff;
   border-radius: 6px;
-  background: #ffffff;
-  width: 400px;
-  padding: 25px 25px 5px 25px;
+  background: rgb(0, 0, 0,0.58);
+  width: 420px;
+  padding: 25px 25px 10px 25px;
   z-index: 1;
   .el-input {
     height: 40px;

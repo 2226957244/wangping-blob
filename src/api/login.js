@@ -35,10 +35,11 @@ export function refreshToken() {
 
 // 获取用户详细信息
 export function getInfo() {
-  return request({
-    url: '/system/user/getInfo',
-    method: 'get'
-  })
+  // return request({
+  //   url: '/system/user/getInfo',
+  //   method: 'get'
+  // })
+  return request.get('/src/api/StaticData/UserInfo.json')
 }
 
 // 退出方法

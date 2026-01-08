@@ -13,7 +13,7 @@ const props = defineProps({
     required: true
   }
 })
-
+console.log(props.to)
 const isExt = computed(() => {
   return isExternal(props.to)
 })

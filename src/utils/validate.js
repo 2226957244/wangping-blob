@@ -5,8 +5,10 @@
  * @returns {Boolean}
  */
 export function isPathMatch(pattern, path) {
+  console.log(pattern,path)
   const regexPattern = pattern.replace(/\//g, '\\/').replace(/\*\*/g, '.*').replace(/\*/g, '[^\\/]*')
   const regex = new RegExp(`^${regexPattern}$`)
+  console.log(path)
   return regex.test(path)
 }
 

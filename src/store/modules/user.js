@@ -24,15 +24,17 @@ const useUserStore = defineStore(
         const password = userInfo.password
         const code = userInfo.code
         const uuid = userInfo.uuid
+        setToken('eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6IjJlNDY0NmU4LTliMmYtNDc1ZC1hYjA1LTk4NjQ4YTMyZmZiNiJ9.kBp54NIm4crcFJ6vBhOjnrw_fkHUWFVb-h_5GBsr2J0WVE-q-Jkaay33GBftqTysG9uoQeqO620TLVmCQli3Sg')
         return new Promise((resolve, reject) => {
-          login(username, password, code, uuid).then(res => {
-            let data = res.data
-            setToken(data.access_token)
-            this.token = data.access_token
-            resolve()
-          }).catch(error => {
-            reject(error)
-          })
+          resolve()
+          // login(username, password, code, uuid).then(res => {
+          //   let data = res.data
+          //   setToken(data.access_token)
+          //   this.token = data.access_token
+          //   resolve()
+          // }).catch(error => {
+          //   reject(error)
+          // })
         })
       },
       // 获取用户信息
@@ -72,15 +74,21 @@ const useUserStore = defineStore(
       // 退出系统
       logOut() {
         return new Promise((resolve, reject) => {
-          logout(this.token).then(() => {
-            this.token = ''
-            this.roles = []
-            this.permissions = []
-            removeToken()
-            resolve()
-          }).catch(error => {
-            reject(error)
-          })
+
+          this.token = ''
+          this.roles = []
+          this.permissions = []
+          removeToken()
+          resolve()
+          // logout(this.token).then(() => {
+          //   this.token = ''
+          //   this.roles = []
+          //   this.permissions = []
+          //   removeToken()
+          //   resolve()
+          // }).catch(error => {
+          //   reject(error)
+          // })
         })
       }
     }

@@ -65,6 +65,10 @@ service.interceptors.request.use(config => {
       }
     }
   }
+  if (config.url.startsWith('/src/')) { // 假设你的本地资源都放在 /src/ 目录下
+    config.baseURL = ''; // 清除 baseURL 设置
+  }
+  console.log('config config config',config)
   return config
 }, error => {
     console.log(error)
@@ -73,6 +77,7 @@ service.interceptors.request.use(config => {
 
 // 响应拦截器
 service.interceptors.response.use(res => {
+  console.log('response--------:', res)
     // 未设置状态码则默认成功状态
     const code = res.data.code || 200
     // 获取错误信息
