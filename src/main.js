@@ -15,7 +15,7 @@ import router from './router'
 import directive from './directive' // directive
 
 // 注册指令
-import plugin sfrom './plugins' // plugins
+import plugin from './plugins' // plugins
 import { download } from '@/utils/request'
 
 // svg图标
