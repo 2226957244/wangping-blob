@@ -1,0 +1,1 @@
+import{_ as o,n as t,i as r,o as c}from"./index-DkeAR7Tu.js";const n={};function _(s,a){const e=t("router-view");return c(),r(e)}const p=o(n,[["render",_],["__scopeId","data-v-8973f139"]]);export{p as default};
